@@ -1,0 +1,284 @@
+{
+  "sensor_break_year": 2012,
+  "assumptions": [
+    "daily_series is VIIRS-referenced from the break year onward; MODIS-only before it",
+    "factor = sum(VIIRS) / sum(MODIS) on overlap days in fit_years",
+    "2026 excluded from fit and holdout: partial year, ratio of 8.37 not yet explained",
+    "countries with fewer than MIN_OVERLAP_DAYS overlap days are not calibrated (counts left as-is)"
+  ],
+  "fit_years": [
+    2012,
+    2019
+  ],
+  "holdout_years": [
+    2020,
+    2025
+  ],
+  "factors": {
+    "Afghanistan": {
+      "country": "Afghanistan",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 463,
+      "modis_sum": 644.0,
+      "viirs_sum": 1582.0,
+      "factor": 2.4565217391304346,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 2.4565217391304346,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": 0.1111,
+          "2021": -0.1222,
+          "2022": 0.3101,
+          "2023": 0.6143,
+          "2024": 0.4156,
+          "2025": 0.1259
+        },
+        "mean_abs_rel_error": 0.2832
+      },
+      "confidence": "low"
+    },
+    "Bangladesh": {
+      "country": "Bangladesh",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 873,
+      "modis_sum": 9301.0,
+      "viirs_sum": 27988.0,
+      "factor": 3.009138802279325,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 3.009138802279325,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": 0.0999,
+          "2021": 0.0011,
+          "2022": -0.3452,
+          "2023": 0.0052,
+          "2024": 0.1334,
+          "2025": 0.2016
+        },
+        "mean_abs_rel_error": 0.1311
+      },
+      "confidence": "medium"
+    },
+    "Bhutan": {
+      "country": "Bhutan",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 440,
+      "modis_sum": 1031.0,
+      "viirs_sum": 2485.0,
+      "factor": 2.4102812803103784,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 2.4102812803103784,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": 0.3453,
+          "2021": 0.2949,
+          "2022": -0.0851,
+          "2023": 0.4236,
+          "2024": 0.2978,
+          "2025": 0.4863
+        },
+        "mean_abs_rel_error": 0.3222
+      },
+      "confidence": "low"
+    },
+    "India": {
+      "country": "India",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 2827,
+      "modis_sum": 374721.0,
+      "viirs_sum": 1935456.0,
+      "factor": 5.16505880374999,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 5.16505880374999,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": 0.0426,
+          "2021": 0.076,
+          "2022": 0.001,
+          "2023": -0.0769,
+          "2024": -0.0719,
+          "2025": 0.0642
+        },
+        "mean_abs_rel_error": 0.0554
+      },
+      "confidence": "high"
+    },
+    "Maldives": {
+      "country": "Maldives",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 6,
+      "modis_sum": 6.0,
+      "viirs_sum": 6.0,
+      "factor": 1.0,
+      "sufficient": false,
+      "status": "not_calibrated",
+      "factor_used": null,
+      "holdout": {
+        "yearly_rel_error": {},
+        "mean_abs_rel_error": null
+      },
+      "confidence": "none"
+    },
+    "Nepal": {
+      "country": "Nepal",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 1350,
+      "modis_sum": 14868.0,
+      "viirs_sum": 79235.0,
+      "factor": 5.32923056228141,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 5.32923056228141,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": -0.0662,
+          "2021": 0.0323,
+          "2022": -0.1054,
+          "2023": -0.1588,
+          "2024": 0.0222,
+          "2025": -0.0843
+        },
+        "mean_abs_rel_error": 0.0782
+      },
+      "confidence": "high"
+    },
+    "Pakistan": {
+      "country": "Pakistan",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 2599,
+      "modis_sum": 54059.0,
+      "viirs_sum": 270454.0,
+      "factor": 5.002941230877375,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 5.002941230877375,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": -0.0613,
+          "2021": -0.0402,
+          "2022": 0.0643,
+          "2023": -0.0073,
+          "2024": 0.0498,
+          "2025": 0.0554
+        },
+        "mean_abs_rel_error": 0.0464
+      },
+      "confidence": "high"
+    },
+    "Sri_Lanka": {
+      "country": "Sri_Lanka",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 956,
+      "modis_sum": 5322.0,
+      "viirs_sum": 28494.0,
+      "factor": 5.354002254791432,
+      "sufficient": true,
+      "status": "fitted",
+      "factor_used": 5.354002254791432,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": -0.0829,
+          "2021": 0.3232,
+          "2022": 0.0513,
+          "2023": -0.1335,
+          "2024": -0.1049,
+          "2025": -0.0765
+        },
+        "mean_abs_rel_error": 0.1287
+      },
+      "confidence": "medium"
+    },
+    "All South Asia": {
+      "country": "All South Asia",
+      "fit_years": [
+        2012,
+        2019
+      ],
+      "n_days": 2891,
+      "modis_sum": 460038.0,
+      "viirs_sum": 2374464.0,
+      "factor": 5.161451880062081,
+      "sufficient": true,
+      "status": "pooled",
+      "factor_used": 5.161451880062081,
+      "holdout": {
+        "yearly_rel_error": {
+          "2020": 0.0268,
+          "2021": 0.0628,
+          "2022": -0.0022,
+          "2023": -0.0707,
+          "2024": -0.0557,
+          "2025": 0.058
+        },
+        "mean_abs_rel_error": 0.046
+      },
+      "confidence": "none"
+    }
+  },
+  "diagnostics": {
+    "Afghanistan": {
+      "step_ratio_raw": 0.656,
+      "step_ratio_calibrated": 1.612
+    },
+    "All South Asia": {
+      "step_ratio_raw": 0.18,
+      "step_ratio_calibrated": 0.928
+    },
+    "Bangladesh": {
+      "step_ratio_raw": 0.549,
+      "step_ratio_calibrated": 1.652
+    },
+    "Bhutan": {
+      "step_ratio_raw": 0.543,
+      "step_ratio_calibrated": 1.309
+    },
+    "India": {
+      "step_ratio_raw": 0.189,
+      "step_ratio_calibrated": 0.975
+    },
+    "Maldives": {
+      "step_ratio_raw": 0.989,
+      "step_ratio_calibrated": 0.989
+    },
+    "Nepal": {
+      "step_ratio_raw": 0.237,
+      "step_ratio_calibrated": 1.264
+    },
+    "Pakistan": {
+      "step_ratio_raw": 0.164,
+      "step_ratio_calibrated": 0.818
+    },
+    "Sri_Lanka": {
+      "step_ratio_raw": 0.267,
+      "step_ratio_calibrated": 1.429
+    }
+  }
+}

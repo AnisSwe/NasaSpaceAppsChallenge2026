@@ -35,9 +35,15 @@ def get_metrics():
 @app.get("/api/daily/{country}")
 def get_daily(country: str):
     df = cache_service.get_daily_series(country)
-    out = df[["date", "year", "doy", "harmonised_count", "raw_count", "total_frp"]].copy()
+    cols = ["date", "year", "doy", "harmonised_count", "raw_count", "total_frp", "harmonised_calibrated"]
+    out = df[[c for c in cols if c in df.columns]].copy()
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
     return out.to_dict(orient="records")
+
+
+@app.get("/api/calibration")
+def get_calibration():
+    return cache_service.get_calibration()
 
 
 @app.get("/api/anomaly")

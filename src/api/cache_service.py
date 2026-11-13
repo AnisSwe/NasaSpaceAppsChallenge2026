@@ -10,6 +10,9 @@ import os
 import numpy as np
 import pandas as pd
 
+SENSOR_BREAK_YEAR = 2012
+VAL_COLS = {"harmonised": "harmonised_count", "raw": "raw_count", "calibrated": "harmonised_calibrated"}
+
 FIXTURES_DIR = (
     "demo_fixtures"
     if os.path.exists("demo_fixtures/daily_series.parquet")
@@ -25,11 +28,16 @@ class LocalFireCacheService:
         self.overlap = pd.read_parquet(f"{data_dir}/overlap_daily.parquet")
         with open(f"{data_dir}/metrics.json", encoding="utf-8") as f:
             self.metrics = json.load(f)
+        cal_path = f"{data_dir}/calibration.json"
+        self.calibration = json.load(open(cal_path, encoding="utf-8")) if os.path.exists(cal_path) else {}
         self.daily["date"] = pd.to_datetime(self.daily["date"])
         self.overlap["date"] = pd.to_datetime(self.overlap["date"])
 
     def get_metrics(self) -> dict:
         return self.metrics
+
+    def get_calibration(self) -> dict:
+        return self.calibration
 
     def get_daily_series(self, country: str) -> pd.DataFrame:
         return self.daily[self.daily["country"] == country].sort_values("date").copy()
@@ -50,12 +58,14 @@ class LocalFireCacheService:
         if sub.empty:
             return {"status": "UNKNOWN_COUNTRY", "country": country}
 
-        val_col = "harmonised_count" if mode == "harmonised" else "raw_count"
+        val_col = VAL_COLS.get(mode, "harmonised_count")
+        if val_col not in sub.columns:
+            return {"status": "MODE_UNAVAILABLE", "mode": mode}
         target_ts = pd.Timestamp(target_date)
         target_doy = min(target_ts.dayofyear, 365)
 
         row_now = sub[sub["date"] == target_ts]
-        current_val = int(row_now[val_col].iloc[0]) if not row_now.empty else 0
+        current_val = float(row_now[val_col].iloc[0]) if not row_now.empty else 0.0
 
         doy_diff = np.abs(sub["doy"] - target_doy)
         doy_diff = np.minimum(doy_diff, 365 - doy_diff)
@@ -65,6 +75,9 @@ class LocalFireCacheService:
             return {"status": "INSUFFICIENT_HISTORY", "current_value": current_val}
 
         pct_rank = float((hist_win[val_col] <= current_val).mean() * 100.0)
+        # Diagnostic: flag when the baseline mixes MODIS-era and VIIRS-era years on the raw scale.
+        mixes_eras = bool(val_col == "harmonised_count" and (hist_win["year"] < SENSOR_BREAK_YEAR).any()
+                          and (hist_win["year"] >= SENSOR_BREAK_YEAR).any())
         med_val = float(hist_win[val_col].median())
         p90_val = float(np.percentile(hist_win[val_col], 90))
 
@@ -81,9 +94,10 @@ class LocalFireCacheService:
             "date": str(target_ts.date()),
             "doy": int(target_doy),
             "mode": mode,
-            "current_value": current_val,
+            "current_value": round(current_val, 1),
             "percentile": round(pct_rank, 1),
             "baseline_median": round(med_val, 1),
+            "baseline_mixes_sensor_eras": mixes_eras,
             "baseline_p90": round(p90_val, 1),
             "baseline_window_days": int(len(hist_win)),
             "baseline_years": f"{int(hist_win['year'].min())}–{int(hist_win['year'].max())}",

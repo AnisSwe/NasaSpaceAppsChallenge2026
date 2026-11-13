@@ -29,6 +29,7 @@
     </label>
     <label>Date: <input type="date" id="dateInput" value="2026-11-12" /></label>
     <button id="btnHarm" class="active" onclick="setMode('harmonised')">Harmonised (5.5 km Cells)</button>
+    <button id="btnCal" onclick="setMode('calibrated')">Calibrated (VIIRS scale)</button>
     <button id="btnRaw" onclick="setMode('raw')">Raw Detections</button>
   </div>
 
@@ -41,7 +42,7 @@
   </div>
 
   <footer>
-    <strong>Methods &amp; Continuity:</strong> Detections are binned onto a 5.5 km grid (confidence &ge; 50) with same-day cell duplicates collapsed to 1 event/day, improving MODIS–VIIRS correlation from <strong>r = 0.8244</strong> to <strong>r = 0.8503</strong> across 5,355 overlap days. Essential for uninterrupted monitoring across the 2 November 2026 Suomi-NPP retirement transition. Data courtesy of NASA FIRMS. Licensed under Apache-2.0.
+    <strong>Methods &amp; Continuity:</strong> Detections are binned onto a 5.5 km grid (confidence &ge; 50) with same-day cell duplicates collapsed to 1 event/day. MODIS-era counts (before 2012) are calibrated to the VIIRS scale with per-country factors fitted on 2012–2019 overlap days and checked on 2020–2025 holdout years (see <code>/api/calibration</code>). Correlation alone (r = 0.8244 raw, 0.8503 harmonised) does not show level consistency, so the calibrated view is the one to use for comparisons across the 2012 sensor transition. Essential for uninterrupted monitoring across the 2 November 2026 Suomi-NPP retirement transition. Data courtesy of NASA FIRMS. Licensed under Apache-2.0.
   </footer>
   <script src="app.js"></script>
 </body>
